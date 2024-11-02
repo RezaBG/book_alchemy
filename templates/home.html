@@ -3,31 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Book Library</title>
+    <title>Library</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Library</h1>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Library</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/add_author">Add Author</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/add_book">Add Book</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-    <form action="/" method="GET">
-        <label for="search">Search by title</label>
-        <input type="text" name="search" id="search" placeholder="Enter keyword"></input>
-        <button type="submit">Search</button>
+<!-- Search Bar -->
+<div class="container mt-4">
+    <form action="/" method="GET" class="form-inline">
+        <input type="text" name="search" id="search" class="form-control mr-2" placeholder="Enter keyword">
+        <button type="submit" class="btn btn-primary">Search</button>
     </form>
 
-    <h2>Books</h2>
-    {% for book in books %}
-    <div>
-        <h3>{{ book.title }}</h3>
-        <p>Author: {{ book.author.name }}</p>
-        <p>ISBN: {{ book.isbn }}</p>
-        <p>Publisher Year: {{ book.publication_year }}</p>
-
-        <!-- Delete book Button -->
-        <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST" style="display:inline;">
-            <button type="submit">Delete Book</button>
-        </form>
+    <!-- Book List -->
+    <h2 class="mt-4">Books</h2>
+    <div class="row">
+        {% for book in books %}
+        <div class="col-md-4">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-text"><strong>Author:</strong> {{ book.author.name }}</p>
+                    <p class="card-text"><strong>ISBN:</strong> {{ book.isbn }}</p>
+                    <p class="card-text"><strong>Publication Year:</strong> {{ book.publication_year }}</p>
+                    <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete Book</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+</div>
+
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

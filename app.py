@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from websockets.asyncio.server import serve
-
 from data_models import db, Author, Book
 from datetime import datetime
 import os
@@ -98,18 +96,14 @@ def get_books():
             "title": book.title,
             "publication_year": book.publication_year,
             "author_id": book.author_id,
-            "author_name": book.author_name if book.author else None,
+            "author_name": book.author.name if book.author else None,
         }
         for book in books
     ]
     return {"books": books_list}, 200
 
-@app.route("/book/<int:book_id>/delete", methods=['GET','POST'])
+@app.route("/book/<int:book_id>/delete", methods=['POST'])
 def delete_book(book_id):
-    if request.method == 'GET':
-        # Redirect Get requests to the homepage
-        return redirect(url_for('home'))
-
     # Proceed with the deletion logic for POST request
     book = Book.query.get(book_id)
     if book:
@@ -123,7 +117,7 @@ def delete_book(book_id):
         remaining_books = Book.query.filter_by(author_id=author_id).count()
         if remaining_books == 0:
             # If no other books by this author, delete the author
-            author = Author.query.filter(author_id)
+            author = Author.query.get(author_id)
             if author:
                 db.session.delete(author)
                 db.session.commit()
@@ -131,7 +125,8 @@ def delete_book(book_id):
             flash("Book successfully deleted")
         else:
             flash("Book not found.")
-        return redirect("home")
+        # Redirect to home after deletion
+        return redirect(url_for('home'))
 
 
 @app.route("/")

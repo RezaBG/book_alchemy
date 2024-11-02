@@ -1,15 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Book</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-<form action="/add_author" method="POST">
-    <!-- Add the form here -->
-</form>
-
+    <meta charset="UTF-8">
+    <div class="container mt-5">
+        <h2>Add Book</h2>
+        <form action="/add_book" method="POST">
+            <div class="form-group">
+                <label for="title">Book Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="isbn">ISBN</label>
+                <input type="text" class="form-control" id="isbn" name="isbn" required>
+            </div>
+            <div class="form-group">
+                <label for="publication_year">Publication Year</label>
+                <input type="number" class="form-control" id="publication_year" name="publication_year" required>
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <select class="form-control" id="author" name="author" required>
+                    {% if authors %}
+                        {% for author in authors %}
+                        <option value="{{ author.id }}">{{ author.name }}</option>
+                        {% endfor %}
+                    {% else %}
+                        <option disabled>No authors available</option>
+                    {% endif %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Book</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
