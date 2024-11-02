@@ -1,0 +1,23 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore environment settings and virtual environments
+.venv/
+env/
+venv/
+
+# Ignore IDE-specific files and folders
+.idea/
+.vscode/
+
+# Ignore SQLite database file
+data/library.sqlite
+
+# Ignore migration files and cache
+migrations/versions/*.pyc
+migrations/env.pyc
+migrations/versions/__pycache__/
+
+# Ignore system files
+*.DS_Store

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Book Library</title>
+</head>
+<body>
+    <h1>Library</h1>
+
+    <form action="/" method="GET">
+        <label for="search">Search by title</label>
+        <input type="text" name="search" id="search" placeholder="Enter keyword"></input>
+        <button type="submit">Search</button>
+    </form>
+
+    <h2>Books</h2>
+    {% for book in books %}
+    <div>
+        <h3>{{ book.title }}</h3>
+        <p>Author: {{ book.author.name }}</p>
+        <p>ISBN: {{ book.isbn }}</p>
+        <p>Publisher Year: {{ book.publication_year }}</p>
+
+        <!-- Delete book Button -->
+        <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST" style="display:inline;">
+            <button type="submit">Delete Book</button>
+        </form>
+    </div>
+    {% endfor %}
+</body>
+</html>
