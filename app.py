@@ -128,6 +128,28 @@ def delete_book(book_id):
         # Redirect to home after deletion
         return redirect(url_for('home'))
 
+@app.route("/author/<int:author_id>/delete", methods=['POST'])
+def delete_author(author_id):
+    # Retrieve the author by ID
+    author = Author.query.get(author_id)
+
+    # Check if the author exists
+    if not author:
+        flash("Author not found")
+        return redirect(url_for('home'))
+
+    # Check if the author has associated books
+    if author.books:
+        flash("Cannot delete author with associated books. Please delete the books first.")
+        return redirect(url_for('author_detail', author_id=author_id))
+
+    # If no associated books, delete the author
+    db.session.delete(author)
+    db.session.commit()
+    flash("Author successfully deleted.")
+
+    return redirect(url_for('home'))
+
 @app.route("/book/<int:book_id>")
 def book_detail(book_id):
     book = Book.query.get(book_id)
