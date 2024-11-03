@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{book.title}} - Details}</title>
+</head>
+<body>
+    <h1>{{ book.title }}</h1>
+    <p><strong>Author:</strong> <a href="{{ url_for('author_detail', author_id=book.author.id)}}">{{ book.author.name}}</a></p>
+    <p><strong>ISBN:</strong> {{ book.ISBN }}</p>
+    <p><strong>Publication Year:</strong> { {book.publication_year }}</p>
+</body>
+</html>

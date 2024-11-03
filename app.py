@@ -128,6 +128,19 @@ def delete_book(book_id):
         # Redirect to home after deletion
         return redirect(url_for('home'))
 
+@app.route("/book/<int:book_id>")
+def book_detail(book_id):
+    book = Book.query.get(book_id)
+    if not book:
+        return "Book not found.", 404
+    return render_template("book_detail.html", book=book)
+
+@app.route("/author/<int:author_id>")
+def author_detail(author_id):
+    author = Author.query.get(author_id)
+    if not author:
+        return "Author not found.", 404
+    return render_template("author_detail.html", author=author)
 
 @app.route("/")
 def home():

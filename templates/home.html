@@ -40,10 +40,22 @@
         <div class="col-md-4">
             <div class="card mt-3">
                 <div class="card-body">
-                    <h5 class="card-title">{{ book.title }}</h5>
-                    <p class="card-text"><strong>Author:</strong> {{ book.author.name }}</p>
+                    <h5 class="card-title">
+                        <a href="{{ url_for('book_detail', book_id=book.id) }}">{{ book.title }}</a>
+                    </h5>
+                    <!-- Link for Author Name -->
+                    <p class="card-text">
+                        <strong>Author:</strong>
+                        {% if book.author %}
+                            <a href="{{ url_for('author_detail', author_id=book.author.id) }}">{{ book.author.name }}</a>
+                        {% else %}
+                            <span>Unknown author</span>
+                        {% endif %}
+                    </p>
+
                     <p class="card-text"><strong>ISBN:</strong> {{ book.isbn }}</p>
                     <p class="card-text"><strong>Publication Year:</strong> {{ book.publication_year }}</p>
+
                     <form action="{{ url_for('delete_book', book_id=book.id) }}" method="POST" style="display:inline;">
                         <button type="submit" class="btn btn-danger">Delete Book</button>
                     </form>

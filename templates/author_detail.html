@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ author.name}} - Details</title>
+</head>
+<body>
+    <h1>{{ author.name}}</h1>
+    <p><strong>Birth Date:</strong> {{author.birth_date}}</p>
+    <p><strong>Date of Death:</strong> {{author.date_of_death}}</p>
+
+    <h2>Book by {{ author.name}}</h2>
+    <ul>
+        {% for book in author.books %}
+            <li><a href="{{ url_for("book_detail", book_id=book.id )}}"></a> {{book.name}}</li>
+        {% else %}
+            <li>No book found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
